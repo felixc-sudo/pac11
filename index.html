@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CARBONCUT | Carbon Footprint Tracking & Offset Order Portal</title>
+  <link rel="stylesheet" href="carboncut_offset_catalog.css" />
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="cc-nav-bar">
+    <div class="cc-container cc-nav-flex">
+      <a href="#order-storefront" class="cc-brand">
+        <span class="cc-dot"></span> CARBONCUT
+      </a>
+      <nav class="cc-nav-links" aria-label="Primary Navigation">
+        <a href="#order-storefront">Offset Catalog &amp; Order Form</a>
+        <a href="#footprint-estimator">Footprint Estimator</a>
+        <a href="#crud-checklist">Reduction Checklist</a>
+        <a href="#validation-theory">Validation Theory</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Practicum Core: 4-Card Catalog + Validated Order Form + Instant Total Price Bill (Matching "CAKE SHOP" Diagram) -->
+  <main id="order-storefront" class="cc-section">
+    <div class="cc-container">
+      <div class="cc-store-shell">
+        <!-- Top Banner matching the diagram's full-width header bar -->
+        <div class="cc-store-banner">
+          <h1>CARBONCUT OFFSET &amp; REDUCTION STORE</h1>
+          <p>Carbon Footprint Tracking &amp; Verified Reduction Packages (₹ / Tonne CO₂e)</p>
+        </div>
+
+        <!-- 4 Carbon Reduction Packages Row (Matching the 4-item visual showcase) -->
+        <div class="cc-catalog-grid">
+          <article class="cc-pkg-card">
+            <img
+              src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=600&q=80"
+              alt="Solar Grid Credit"
+              onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect width=%22300%22 height=%22200%22 fill=%22%230f766e%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23ffffff%22 font-family=%22sans-serif%22 font-size=%2216%22 text-anchor=%22middle%22>Solar Grid Credit</text></svg>'"
+            />
+            <p class="cc-pkg-caption">Solar Grid Credit &ndash; Rs. 300</p>
+          </article>
+
+          <article class="cc-pkg-card">
+            <img
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=80"
+              alt="Forest Sink Offset"
+              onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect width=%22300%22 height=%22200%22 fill=%22%2314532d%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23ffffff%22 font-family=%22sans-serif%22 font-size=%2216%22 text-anchor=%22middle%22>Forest Sink Offset</text></svg>'"
+            />
+            <p class="cc-pkg-caption">Forest Sink Offset &ndash; Rs. 200</p>
+          </article>
+
+          <article class="cc-pkg-card">
+            <img
+              src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80"
+              alt="Blue Mangrove Credit"
+              onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect width=%22300%22 height=%22200%22 fill=%22%230369a1%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23ffffff%22 font-family=%22sans-serif%22 font-size=%2216%22 text-anchor=%22middle%22>Blue Mangrove Credit</text></svg>'"
+            />
+            <p class="cc-pkg-caption">Blue Mangrove Credit &ndash; Rs. 250</p>
+          </article>
+
+          <article class="cc-pkg-card">
+            <img
+              src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80"
+              alt="Biochar Sequestration"
+              onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22200%22><rect width=%22300%22 height=%22200%22 fill=%22%23334155%22/><text x=%2250%%22 y=%2250%%22 fill=%22%23ffffff%22 font-family=%22sans-serif%22 font-size=%2216%22 text-anchor=%22middle%22>Biochar Sequestration</text></svg>'"
+            />
+            <p class="cc-pkg-caption">Biochar Sequestration &ndash; Rs. 350</p>
+          </article>
+        </div>
+
+        <!-- JavaScript-Validated Order Form (onsubmit & oninput validation) -->
+        <div class="cc-order-panel">
+          <h2 class="cc-order-heading">Order Carbon Reduction Credits</h2>
+
+          <form id="offsetOrderForm" onsubmit="return validateAndBillOrder(event)" novalidate>
+            <div class="cc-form-group">
+              <label for="orgName">Organization / Buyer Name *</label>
+              <input
+                type="text"
+                id="orgName"
+                placeholder="Enter organization or individual name"
+                oninput="validateSingleField('orgName')"
+              />
+              <small class="cc-error-msg" id="orgNameError"></small>
+            </div>
+
+            <div class="cc-form-group">
+              <label for="qtySolar">Solar Grid Credit (Quantity in Tonnes CO₂e)</label>
+              <input
+                type="number"
+                id="qtySolar"
+                min="0"
+                max="1000"
+                value="2"
+                oninput="validateSingleField('qtySolar')"
+              />
+              <small class="cc-error-msg" id="qtySolarError"></small>
+            </div>
+
+            <div class="cc-form-group">
+              <label for="qtyForest">Forest Sink Offset (Quantity in Tonnes CO₂e)</label>
+              <input
+                type="number"
+                id="qtyForest"
+                min="0"
+                max="1000"
+                value="1"
+                oninput="validateSingleField('qtyForest')"
+              />
+              <small class="cc-error-msg" id="qtyForestError"></small>
+            </div>
+
+            <div class="cc-form-group">
+              <label for="qtyMangrove">Blue Mangrove Credit (Quantity in Tonnes CO₂e)</label>
+              <input
+                type="number"
+                id="qtyMangrove"
+                min="0"
+                max="1000"
+                value="2"
+                oninput="validateSingleField('qtyMangrove')"
+              />
+              <small class="cc-error-msg" id="qtyMangroveError"></small>
+            </div>
+
+            <div class="cc-form-group">
+              <label for="qtyBiochar">Biochar Sequestration (Quantity in Tonnes CO₂e)</label>
+              <input
+                type="number"
+                id="qtyBiochar"
+                min="0"
+                max="1000"
+                value="1"
+                oninput="validateSingleField('qtyBiochar')"
+              />
+              <small class="cc-error-msg" id="qtyBiocharError"></small>
+            </div>
+
+            <button type="submit" class="cc-place-btn">Place Offset Order</button>
+          </form>
+
+          <hr class="cc-divider" />
+
+          <!-- Purchase Order Bill Output (Matches the diagram's green badge + Rs. total) -->
+          <div class="cc-bill-section" aria-live="polite">
+            <h3 class="cc-bill-title">Carbon Offset Order Bill!!</h3>
+            <p class="cc-bill-meta" id="billSummaryLine">
+              6 Tonnes CO₂e Verified Offset Portfolio (2 Solar, 1 Forest, 2 Mangrove, 1 Biochar)
+            </p>
+            <div class="cc-total-row">
+              <span class="cc-total-badge">Total Price</span>
+              <span class="cc-total-amount" id="totalBillAmount">Rs. 1650</span>
+            </div>
+            <button type="button" class="cc-log-order-btn" onclick="logOrderToChecklist()">
+              + Save Order Milestone to Reduction Checklist
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Interactive Carbon Footprint Estimator -->
+  <section id="footprint-estimator" class="cc-section cc-tinted">
+    <div class="cc-container">
+      <div class="cc-sec-head">
+        <h2>Carbon Footprint Tracking Calculator</h2>
+        <p>Estimate your monthly and annual CO₂e emissions before ordering reduction credits above.</p>
+      </div>
+
+      <div class="cc-calc-grid">
+        <div>
+          <div class="cc-range-field">
+            <label for="elecInput">Monthly Electricity Consumption: <strong id="elecDisp">300</strong> kWh</label>
+            <input type="range" id="elecInput" min="50" max="1500" value="300" oninput="recalcFootprint()" />
+          </div>
+          <div class="cc-range-field">
+            <label for="travelInput">Weekly Commute / Fleet Distance: <strong id="travelDisp">140</strong> km</label>
+            <input type="range" id="travelInput" min="0" max="1000" value="140" oninput="recalcFootprint()" />
+          </div>
+          <div class="cc-range-field">
+            <label for="opsProfile">Operations &amp; Diet Intensity</label>
+            <select id="opsProfile" onchange="recalcFootprint()">
+              <option value="115">Plant-Based / Low-Carbon (115 kg CO₂e/mo)</option>
+              <option value="170" selected>Vegetarian Balanced (170 kg CO₂e/mo)</option>
+              <option value="250">Standard Mixed (250 kg CO₂e/mo)</option>
+              <option value="340">High-Intensity Cold Chain (340 kg CO₂e/mo)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="cc-calc-card">
+          <span class="cc-kicker">ESTIMATED CARBON FOOTPRINT</span>
+          <div class="cc-calc-num"><span id="monthKgOut">513</span> <small>kg CO₂e / month</small></div>
+          <p>Annual Footprint: <strong id="annualTonnesOut">6.16</strong> tonnes CO₂e / year</p>
+          <div id="advisorNote" class="cc-advisor-pill">Recommended Offset: ~6 Tonnes CO₂e / year</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CRUD Action Checklist (Input box, Add button onclick, CRUD array of tasks) -->
+  <section id="crud-checklist" class="cc-section">
+    <div class="cc-container">
+      <div class="cc-sec-head">
+        <h2>Carbon Reduction CRUD Action Checklist</h2>
+        <p>Create, read, update, and delete sustainability actions stored in a live JavaScript task array.</p>
+      </div>
+
+      <div class="cc-crud-box">
+        <div class="cc-input-row">
+          <input
+            type="text"
+            id="taskInputBox"
+            placeholder="Enter a carbon reduction task (e.g., Audit facility HVAC energy load)..."
+            aria-label="New carbon reduction task"
+          />
+          <button type="button" class="cc-btn cc-btn-primary" onclick="addTask()">Add Task</button>
+        </div>
+
+        <div class="cc-crud-bar">
+          <span id="crudStats">0 tasks tracked</span>
+          <button type="button" class="cc-link-btn" onclick="resetSamples()">Reset Sample Tasks</button>
+        </div>
+
+        <ul id="crudTaskList" class="cc-task-ul"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Minimum Underpinning Theory -->
+  <section id="validation-theory" class="cc-section cc-tinted">
+    <div class="cc-container">
+      <div class="cc-sec-head">
+        <h2>Minimum Underpinning Theory: JavaScript Form Validation</h2>
+        <p>DOM access, event listeners (<code>onsubmit</code>, <code>oninput</code>), and conditional logic.</p>
+      </div>
+
+      <div class="cc-theory-card">
+        <p>
+          Developing a form with validation using JavaScript relies on understanding the
+          <strong>Document Object Model (DOM)</strong>, event listeners (<code>onsubmit</code> and <code>oninput</code>),
+          and conditional statements (<code>if / else</code>). JavaScript intercepts user input changes and form
+          submissions to verify required fields, numeric ranges, and minimum order constraints in real time—highlighting
+          invalid fields and displaying clear feedback before computing the verified carbon offset bill.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="cc-footer">
+    <div class="cc-container cc-footer-flex">
+      <span><strong>CARBONCUT</strong> &mdash; Carbon Footprint Tracking &amp; Reduction Services</span>
+      <span>&copy; 2026 CARBONCUT &bull; Ready for GitHub &amp; Vercel</span>
+    </div>
+  </footer>
+
+  <script src="carboncut_validation_billing.js"></script>
+</body>
+</html>
